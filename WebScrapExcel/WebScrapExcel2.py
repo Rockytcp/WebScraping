@@ -3,7 +3,7 @@ import requests
 import pandas as pd 
 import csv 
 
-def webscraping(url, table_id):
+def webscraping(url, table_id, filename):
 
     url = url
 
@@ -17,7 +17,7 @@ def webscraping(url, table_id):
 
     #print(df)
 
-    filename = 'WebSrapTabela2.csv'
+    filename = filename
 
     csv_writer = csv.writer(open(filename, 'w'))
 
@@ -37,7 +37,7 @@ def webscraping(url, table_id):
 
 
 # Código Principal
-tabela1 = webscraping("https://www.cip-bancos.org.br/DadosEstrategicos/EvolPagsMesTot.html", "a84")
-tabela2 = webscraping("https://www.cip-bancos.org.br/DadosEstrategicos/EvolPags.html", "a89")
+tabela1 = webscraping("https://www.cip-bancos.org.br/DadosEstrategicos/EvolPagsMesTot.html", "a84", "tabela1.csv")
+tabela2 = webscraping("https://www.cip-bancos.org.br/DadosEstrategicos/EvolPags.html", "a89", "tabela2.csv")
     
 
