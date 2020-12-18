@@ -3,33 +3,41 @@ import requests
 import pandas as pd 
 import csv 
 
-url = 'https://www.cip-bancos.org.br/DadosEstrategicos/EvolPagsMesTot.html'
+def webscraping(url, table_id):
 
-table_id = 'a84'
+    url = url
 
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'html.parser')
+    table_id = table_id
 
-Tabela = soup.find(attrs={'class': table_id})
-df = pd.read_html(str(Tabela))
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
 
-#print(df)
+    Tabela = soup.find(attrs={'class': table_id})
+    df = pd.read_html(str(Tabela))
 
-filename = 'WebSrapTabela2.csv'
+    #print(df)
 
-csv_writer = csv.writer(open(filename, 'w'))
+    filename = 'WebSrapTabela2.csv'
+
+    csv_writer = csv.writer(open(filename, 'w'))
 
 
-tr = Tabela.find_all('tr')
-data = []
-for rows in tr[1:]:
-    data2 = []
-    for td in rows.find_all(['td']):
-        
-        data2.append(td.text.replace('\n', '').strip())
+    tr = Tabela.find_all('tr')
+    data = []
+    for rows in tr[1:]:
+        data2 = []
+        for td in rows.find_all(['td']):
+            
+            data2.append(td.text.replace('\n', '').strip())
 
-    data.append(data2)
-for Table in data:
-    csv_writer.writerow(Table)
+        data.append(data2)
+    for Table in data:
+        csv_writer.writerow(Table)
+
+
+
+# Código Principal
+tabela1 = webscraping("https://www.cip-bancos.org.br/DadosEstrategicos/EvolPagsMesTot.html", "a84")
+tabela2 = webscraping("https://www.cip-bancos.org.br/DadosEstrategicos/EvolPags.html", "a89")
     
 
